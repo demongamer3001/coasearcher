@@ -1,7 +1,11 @@
 #Made by Blank (PHG Moderator)
 
-import discord, os, aiohttp
+import discord, os, aiohttp, asyncio
 from discord.ext import commands, tasks
+try:
+    from keep_alive import keep_alive
+except Exception:
+    pass
 
 ownerid=904682505104396329
 prefix=","
@@ -87,6 +91,15 @@ async def activity():
 
 @client.event
 async def on_ready():
+    try:
+        keep_alive()
+    except Exception:
+        pass
+    await asyncio.sleep(2)
+    if os.name=="nt":
+        os.system('cls')
+    else:
+        os.system('clear')
     print(f"Connected to {client.user}")
     activity.start()
 
