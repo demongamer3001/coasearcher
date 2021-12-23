@@ -87,7 +87,7 @@ client=commands.Bot(command_prefix=prefix, owner_id=ownerid, help_command=None, 
 
 @tasks.loop(minutes=10)
 async def activity():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"Prefix: {prefix} in {len(client.guilds)} servers!"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help in {len(client.guilds)} servers!"))
 
 @client.event
 async def on_ready():
@@ -535,7 +535,7 @@ async def refresh(ctx, name="PHG"):
 @client.command()
 async def invite(ctx):
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
-    embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Clcik [here]({invite_url}) to invite me to your server")
+    embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
     await ctx.reply(embed=embed)
 
 @client.event
