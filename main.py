@@ -553,10 +553,9 @@ async def invite(ctx):
 
 @client.event
 async def on_message(message):
-    if message.author==client.user:
-        return
     if isinstance(message.channel, discord.DMChannel):
-        await message.reply("My commands won't work in DMs")
+        return
+    if message.author.bot:
         return
     if message.content.strip()==f"<@{client.user.id}>" or message.content.strip()==f"<@!{client.user.id}>":
         await message.reply(f"My prefix is {prefix}")
