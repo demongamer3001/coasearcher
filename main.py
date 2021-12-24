@@ -546,7 +546,7 @@ async def refresh(ctx, name="PHG"):
 @client.command()
 async def invite(ctx):
   async with ctx.typing():
-    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
+    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&redirect_uri=https%3A%2F%2Fdiscord.gg%2FNCkgRHZ9Jj&response_type=code&scope=bot%20guilds.join"
     embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
@@ -564,7 +564,7 @@ async def on_message(message):
 @client.command()
 async def help(ctx):
   async with ctx.typing():
-    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
+    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&redirect_uri=https%3A%2F%2Fdiscord.gg%2FNCkgRHZ9Jj&response_type=code&scope=bot%20guilds.join"
     embed=discord.Embed(title="COA Searcher", colour=discord.Colour.random(), url=invite_url)
     embed.add_field(name=f"1) search <name>", value="```\nGets info about a CoA user```", inline=False)
     embed.add_field(name=f"2) main <name>", value="```\nGets info about the main level a CoA user```", inline=False)
@@ -580,12 +580,5 @@ async def help(ctx):
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
-try:    
-    client.run(os.environ['token'])
-except Exception:
-    if not os.name=="nt":
-        try:
-            os.system('kill 1')
-            client.run(os.environ['token'])
-        except Exception as e:
-            print(e)
+    
+client.run(os.environ['token'])
