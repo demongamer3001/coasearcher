@@ -557,6 +557,8 @@ async def on_message(message):
         return
     if message.author.bot:
         return
+    if message.author==client.user:
+        return
     if message.content.strip()==f"<@{client.user.id}>" or message.content.strip()==f"<@!{client.user.id}>":
         await message.reply(f"My prefix is {prefix}")
     else:
