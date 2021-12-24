@@ -564,6 +564,15 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
+@client.event
+async def on_message_edit(before, after):
+    if after.author.bot:
+        return
+    if after.author==client.user:
+        return
+    if not after=="":
+        await client.process_commands(after)
+
 @client.command()
 async def help(ctx):
   async with ctx.typing():
