@@ -580,5 +580,12 @@ async def help(ctx):
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
-    
-client.run(os.environ['token'])
+try:    
+    client.run(os.environ['token'])
+except Exception:
+    if not os.name=="nt":
+        try:
+            os.system('kill 1')
+            client.run(os.environ['token'])
+        except Exception as e:
+            print(e)
