@@ -120,7 +120,9 @@ async def on_command_error(ctx, error):
 @client.command()
 async def about(ctx):
     embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
-    await ctx.reply(embed=embed)
+    async with ctx.typing():
+      await asyncio.sleep(1)
+      await ctx.reply(embed=embed)
 
 @client.command()
 async def search(ctx, *, name=None):
@@ -158,6 +160,7 @@ async def search(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -203,6 +206,7 @@ async def woodcutting(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -248,6 +252,7 @@ async def mining(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -293,6 +298,7 @@ async def cooking(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -338,6 +344,7 @@ async def fishing(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -383,6 +390,7 @@ async def smithing(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -428,6 +436,7 @@ async def crafting(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -473,6 +482,7 @@ async def main(ctx, *, name=None):
                 emoji="🍳"
             elif i=="woodcutting":
                 emoji="🪓"
+            await asyncio.sleep(1)
             embed.add_field(name=f"{emoji} {i.title()}", value=f"Level {lvl} (XP: {format(exp['xp'])})", inline=False)
             embed.color=colour(exp['name_color'])
             if i==method_list[-1]:
@@ -526,6 +536,7 @@ async def refresh(ctx, name="PHG"):
         if i==method_list[-1]:
             embed.description=None
         try:
+            await asyncio.sleep(1)
             await m.edit(embed=embed)
         except Exception:
             return
@@ -534,8 +545,10 @@ async def refresh(ctx, name="PHG"):
 
 @client.command()
 async def invite(ctx):
+  async with ctx.typing():
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
     embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
+    await asyncio.sleep(1)
     await ctx.reply(embed=embed)
 
 @client.event
@@ -548,8 +561,9 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
-@client.command()            
+@client.command()
 async def help(ctx):
+  async with ctx.typing():
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
     embed=discord.Embed(title="COA Searcher", colour=discord.Colour.random(), url=invite_url)
     embed.add_field(name=f"1) search <name>", value="```\nGets info about a CoA user```", inline=False)
@@ -564,6 +578,7 @@ async def help(ctx):
     embed.add_field(name=f"10) invite", value="```\nInvite the bot to your server```", inline=False)
     embed.add_field(name=f"11) about", value="```\nGets info about the bot```", inline=False)
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
+    await asyncio.sleep(1)
     await ctx.reply(embed=embed)
     
 client.run(os.environ['token'])
