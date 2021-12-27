@@ -579,7 +579,7 @@ async def help(ctx):
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&redirect_uri=https%3A%2F%2Fdiscord.gg%2FNCkgRHZ9Jj&response_type=code&scope=bot%20guilds.join"
     embed=discord.Embed(title="COA Searcher", colour=discord.Colour.random(), url=invite_url)
     embed.add_field(name=f"1) search <name>", value="```\nGets info about a CoA user```", inline=False)
-    embed.add_field(name=f"2) main <name>", value="```\nGets info about the main level a CoA user```", inline=False)
+    embed.add_field(name=f"2) main <name>", value="```\nGets info about the main level of a CoA user```", inline=False)
     embed.add_field(name=f"3) mining <name>", value="```\nGets info about the mining level of a CoA user```", inline=False)
     embed.add_field(name=f"4) woodcutting <name>", value="```\nGets info about the woodcutting level of a CoA user```", inline=False)
     embed.add_field(name=f"5) smithing <name>", value="```\nGets info about the smithing level of a CoA user```", inline=False)
