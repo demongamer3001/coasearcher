@@ -593,7 +593,7 @@ async def save(ctx, *, name:str=None):
             return
     with open('saved.json') as e:
         saved=json.load(e)
-    saved[ctx.user.id]=name.strip()
+    saved[ctx.author.id]=name.strip()
     with open('saved.json', 'w') as e:
         json.dump(saved, e)
     await ctx.send('Successfully saved `{name.strip()}` on your profile!')
