@@ -97,12 +97,13 @@ global saved
 
 def load_saved():
     try:
-        with open('saved.json') as e:
-            saved=json.load(e)
+        with open('saved.json'):
+            pass
     except Exception:
         with open('saved.json', 'w+') as e:
             json.dump({}, e)
-            saved=json.load({})
+        with open('saved.json') as e:
+            saved=json.load(e)
 
 @client.event
 async def on_ready():
