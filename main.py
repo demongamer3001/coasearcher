@@ -586,7 +586,7 @@ async def main(ctx, *, name=None):
 @client.command()
 async def save(ctx, *, name:str=None):
     if name is None:
-        await ctx.send('You need to enter the name too!')
+        await ctx.reply('You need to enter the name too!')
         return
     if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
@@ -596,7 +596,7 @@ async def save(ctx, *, name:str=None):
     saved[ctx.author.id]=name.strip()
     with open('saved.json', 'w') as e:
         json.dump(saved, e)
-    await ctx.send('Successfully saved `{name.strip()}` on your profile!')
+    await ctx.reply('Successfully saved `{name.strip()}` on your profile!')
 
 @client.command(aliases=['lb'])
 async def refresh(ctx, name="PHG"):
