@@ -101,7 +101,7 @@ def load_saved():
             saved=json.load(e)
     except Exception:
         with open('saved.json', 'w+') as e:
-            json.dumps('{}', e)
+            json.dump('{}', e)
             saved=json.loads('{}')
 
 @client.event
