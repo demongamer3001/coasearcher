@@ -1,6 +1,6 @@
 #Made by Blank (PHG Moderator)
 
-import discord, os, aiohttp, asyncio
+import discord, os, aiohttp, asyncio, json
 from discord.ext import commands, tasks
 try:
     from keep_alive import keep_alive
@@ -9,6 +9,7 @@ except Exception:
 
 ownerid=904682505104396329
 prefix=","
+
 
 def page_url(method, page:int=0):
     if method=="main":
@@ -83,14 +84,29 @@ def level(xp=None):
             elif xp>=xps[i] and xp<xps[i+1]:
                 return i+1
 
-client=commands.Bot(command_prefix=prefix, owner_id=ownerid, help_command=None, intents=discord.Intents.default())
+intents=discord.Intents.default()
+intents.members=True
+
+client=commands.Bot(command_prefix=prefix, owner_id=ownerid, help_command=None, intents=intents)
 
 @tasks.loop(minutes=10)
 async def activity():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help in {len(client.guilds)} servers!"))
 
+global saved
+
+def load_saved():
+    try:
+        with open('saved.json') as e:
+            saved=json.load(e)
+    except Exception:
+        with open('saved.json', 'w+') as e:
+            json.dump('{}', e)
+            saved={}
+
 @client.event
 async def on_ready():
+    load_saved()
     try:
         keep_alive()
     except Exception:
@@ -119,14 +135,27 @@ async def on_command_error(ctx, error):
 
 @client.command()
 async def about(ctx):
-    embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
+    owner=client.get_user()
+    if owner is None:
+        embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
+    else:
+        embed=discord.Embed(title="About", description="Bot made by {owner.mention}", colour=discord.Colour.random())
     async with ctx.typing():
       await asyncio.sleep(1)
       await ctx.reply(embed=embed)
 
+
+
 @client.command()
 async def search(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['main', 'mining', 'smithing', 'fishing', 'crafting', 'cooking', 'woodcutting']
@@ -173,6 +202,13 @@ async def search(ctx, *, name=None):
 @client.command()
 async def woodcutting(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['woodcutting']
@@ -219,6 +255,13 @@ async def woodcutting(ctx, *, name=None):
 @client.command()
 async def mining(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['mining']
@@ -265,6 +308,13 @@ async def mining(ctx, *, name=None):
 @client.command()
 async def cooking(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['cooking']
@@ -311,6 +361,13 @@ async def cooking(ctx, *, name=None):
 @client.command()
 async def fishing(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['fishing']
@@ -357,6 +414,13 @@ async def fishing(ctx, *, name=None):
 @client.command()
 async def smithing(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['smithing']
@@ -403,6 +467,13 @@ async def smithing(ctx, *, name=None):
 @client.command()
 async def crafting(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['crafting']
@@ -449,6 +520,13 @@ async def crafting(ctx, *, name=None):
 @client.command()
 async def main(ctx, *, name=None):
         if name is None:
+            if not ctx.author.id in saved.keys():
+                await ctx.reply("You need to enter the name too!")
+                return
+            else:
+                name=saved[ctx.author.id]
+        if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
             return
         exp=0
         method_list=['main']
@@ -491,6 +569,19 @@ async def main(ctx, *, name=None):
                 await m.edit(embed=embed)
             except Exception:
                 return
+
+@client.command()
+async def save(ctx, *, name:str=None):
+    if name is None:
+        await ctx.send('You need to enter the name too!')
+        return
+    if type(name)==discord.Member:
+            await ctx.reply(f'Invalid Name: `{name}`')
+            return
+    saved[ctx.user.id]=name.strip()
+    with open('saved.json', 'w') as e:
+        json.dump(saved, e)
+    await ctx.send('Successfully saved `{name.strip()}` on your profile!')
 
 @client.command(aliases=['lb'])
 async def refresh(ctx, name="PHG"):
@@ -587,8 +678,9 @@ async def help(ctx):
     embed.add_field(name=f"7) fishing <name>", value="```\nGets info about the fishing level of a CoA user```", inline=False)
     embed.add_field(name=f"8) cooking <name>", value="```\nGets info about the cooking level of a CoA user```", inline=False)
     embed.add_field(name=f"9) refresh <guild prefix>", value="```\nGets the leaderboards of a guild (e.g. PHG, GOD etc.)```", inline=False)
-    embed.add_field(name=f"10) invite", value="```\nInvite the bot to your server```", inline=False)
-    embed.add_field(name=f"11) about", value="```\nGets info about the bot```", inline=False)
+    embed.add_field(name=f"10) save <name>", value="```\nSaves the given character name to your profile for quick search```", inline=False)
+    embed.add_field(name=f"11) invite", value="```\nInvite the bot to your server```", inline=False)
+    embed.add_field(name=f"12) about", value="```\nGets info about the bot```", inline=False)
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
