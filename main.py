@@ -591,6 +591,8 @@ async def save(ctx, *, name:str=None):
     if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
+    with open('saved.json') as e:
+        saved=json.load(e)
     saved[ctx.user.id]=name.strip()
     with open('saved.json', 'w') as e:
         json.dump(saved, e)
