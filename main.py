@@ -93,17 +93,8 @@ client=commands.Bot(command_prefix=prefix, owner_id=ownerid, help_command=None, 
 async def activity():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help in {len(client.guilds)} servers!"))
 
-def create_save_file():
-    try:
-        with open('saved.json'):
-            pass
-    except Exception:
-        with open('saved.json', 'w+') as e:
-            json.dump({}, e)
-
 @client.event
 async def on_ready():
-    create_save_file()
     try:
         keep_alive()
     except Exception:
@@ -132,7 +123,7 @@ async def on_command_error(ctx, error):
 
 @client.command()
 async def about(ctx):
-    owner=client.get_user()
+    owner=client.get_user(ownerid)
     if owner is None:
         embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
     else:
@@ -146,13 +137,9 @@ async def about(ctx):
 @client.command()
 async def search(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -201,13 +188,10 @@ async def search(ctx, *, name=None):
 @client.command()
 async def woodcutting(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -256,13 +240,10 @@ async def woodcutting(ctx, *, name=None):
 @client.command()
 async def mining(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -311,13 +292,10 @@ async def mining(ctx, *, name=None):
 @client.command()
 async def cooking(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -366,13 +344,10 @@ async def cooking(ctx, *, name=None):
 @client.command()
 async def fishing(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -421,13 +396,10 @@ async def fishing(ctx, *, name=None):
 @client.command()
 async def smithing(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -476,13 +448,10 @@ async def smithing(ctx, *, name=None):
 @client.command()
 async def crafting(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -531,13 +500,10 @@ async def crafting(ctx, *, name=None):
 @client.command()
 async def main(ctx, *, name=None):
         if name is None:
-            with open('saved.json') as e:
-                saved=json.load(e)
-            if not ctx.author.id in saved.keys():
+            
                 await ctx.reply("You need to enter the name too!")
                 return
-            else:
-                name=saved[ctx.author.id]
+            
         if type(name)==discord.Member:
             await ctx.reply(f'Invalid Name: `{name}`')
             return
@@ -693,9 +659,8 @@ async def help(ctx):
     embed.add_field(name=f"7) fishing <name>", value="```\nGets info about the fishing level of a CoA user```", inline=False)
     embed.add_field(name=f"8) cooking <name>", value="```\nGets info about the cooking level of a CoA user```", inline=False)
     embed.add_field(name=f"9) refresh <guild prefix>", value="```\nGets the leaderboards of a guild (e.g. PHG, GOD etc.)```", inline=False)
-    embed.add_field(name=f"10) save <name>", value="```\nSaves the given character name to your profile for quick search```", inline=False)
-    embed.add_field(name=f"11) invite", value="```\nInvite the bot to your server```", inline=False)
-    embed.add_field(name=f"12) about", value="```\nGets info about the bot```", inline=False)
+    embed.add_field(name=f"10) invite", value="```\nInvite the bot to your server```", inline=False)
+    embed.add_field(name=f"11) about", value="```\nGets info about the bot```", inline=False)
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
