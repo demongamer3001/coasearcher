@@ -93,21 +93,17 @@ client=commands.Bot(command_prefix=prefix, owner_id=ownerid, help_command=None, 
 async def activity():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help in {len(client.guilds)} servers!"))
 
-global saved
-
-def load_saved():
+def create_save_file():
     try:
         with open('saved.json'):
             pass
     except Exception:
         with open('saved.json', 'w+') as e:
             json.dump({}, e)
-        with open('saved.json') as e:
-            saved=json.load(e)
 
 @client.event
 async def on_ready():
-    load_saved()
+    create_save_file()
     try:
         keep_alive()
     except Exception:
@@ -150,6 +146,8 @@ async def about(ctx):
 @client.command()
 async def search(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -203,6 +201,8 @@ async def search(ctx, *, name=None):
 @client.command()
 async def woodcutting(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -256,6 +256,8 @@ async def woodcutting(ctx, *, name=None):
 @client.command()
 async def mining(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -309,6 +311,8 @@ async def mining(ctx, *, name=None):
 @client.command()
 async def cooking(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -362,6 +366,8 @@ async def cooking(ctx, *, name=None):
 @client.command()
 async def fishing(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -415,6 +421,8 @@ async def fishing(ctx, *, name=None):
 @client.command()
 async def smithing(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -468,6 +476,8 @@ async def smithing(ctx, *, name=None):
 @client.command()
 async def crafting(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
@@ -521,6 +531,8 @@ async def crafting(ctx, *, name=None):
 @client.command()
 async def main(ctx, *, name=None):
         if name is None:
+            with open('saved.json') as e:
+                saved=json.load(e)
             if not ctx.author.id in saved.keys():
                 await ctx.reply("You need to enter the name too!")
                 return
