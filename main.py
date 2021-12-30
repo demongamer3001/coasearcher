@@ -128,7 +128,7 @@ async def about(ctx):
         embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
     else:
         embed=discord.Embed(title="About", description="Bot made by {owner.mention}", colour=discord.Colour.random())
-    async with ctx.typing():
+    #async with ctx.typing():
       await asyncio.sleep(1)
       await ctx.reply(embed=embed)
 
@@ -617,7 +617,7 @@ async def refresh(ctx, name="PHG"):
 
 @client.command()
 async def invite(ctx):
-  async with ctx.typing():
+  #async with ctx.typing():
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
     embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
     await asyncio.sleep(1)
@@ -647,7 +647,7 @@ async def on_message_edit(before, after):
 
 @client.command()
 async def help(ctx):
-  async with ctx.typing():
+  #async with ctx.typing():
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
     embed=discord.Embed(title="COA Searcher", colour=discord.Colour.random(), url=invite_url)
     embed.add_field(name=f"1) search <name>", value="```\nGets info about a CoA user```", inline=False)
