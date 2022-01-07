@@ -109,6 +109,13 @@ async def on_ready():
 
 @client.event
 async def on_guild_join(guild):
+    async for i in guild.audit_logs(action=discord.AuditLogAction.bot_add):
+        if i.target==client.user:
+            try:
+                await i.user.send(f'https://images-ext-1.discordapp.net/external/VJv56dgUkQLomWyqwI5oScUEcvthwkWzBOLh1eEkHTE/https/media.discordapp.net/attachments/923954415004713000/928899128275140679/Blank_kannagen.png')
+            except Exception:
+                pass
+            break
     try:
         await guild.me.edit(nick=f"{client.user.display_name} ({prefix})")
     except Exception:
@@ -618,7 +625,7 @@ async def refresh(ctx, name="PHG"):
 @client.command()
 async def invite(ctx):
   async with ctx.typing():
-    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
+    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161216&scope=bot"
     embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
     await asyncio.sleep(1)
     await ctx.reply(embed=embed)
@@ -648,7 +655,7 @@ async def on_message_edit(before, after):
 @client.command()
 async def help(ctx):
   async with ctx.typing():
-    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161088&scope=bot"
+    invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161216&scope=bot"
     embed=discord.Embed(title="COA Searcher", colour=discord.Colour.random(), url=invite_url)
     embed.add_field(name=f"1) search <name>", value="```\nGets info about a CoA user```", inline=False)
     embed.add_field(name=f"2) main <name>", value="```\nGets info about the main level of a CoA user```", inline=False)
