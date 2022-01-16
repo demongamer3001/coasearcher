@@ -134,8 +134,7 @@ async def about(ctx):
     if owner is None:
         embed=discord.Embed(title="About", description="Bot made by **Blank (PHG Moderator)**", colour=discord.Colour.random())
     else:
-        embed=discord.Embed(title="About", description="Bot made by {owner.mention}", colour=discord.Colour.random())
-    await asyncio.sleep(1)
+        embed=discord.Embed(title="About", description=f"Bot made by {owner.mention}", colour=discord.Colour.random())
     await ctx.reply(embed=embed)
 
 @client.command()
@@ -623,7 +622,6 @@ async def refresh(ctx, name="PHG"):
 async def invite(ctx):
     invite_url=f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=67161216&scope=bot"
     embed=discord.Embed(colour=discord.Colour.random(), title="Invite me?", description=f"Click [here]({invite_url}) to invite me to your server")
-    await asyncio.sleep(1)
     await ctx.reply(embed=embed)
 
 @client.event
@@ -664,7 +662,6 @@ async def help(ctx):
     embed.add_field(name=f"10) invite", value="```\nInvite the bot to your server```", inline=False)
     embed.add_field(name=f"11) about", value="```\nGets info about the bot```", inline=False)
     embed.set_footer(text=f"Requested by {ctx.author} | Prefix: {prefix}")
-    await asyncio.sleep(1)
     await ctx.reply(embed=embed)
     
 client.run(os.environ['token'])
